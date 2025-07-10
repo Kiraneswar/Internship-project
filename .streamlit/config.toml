@@ -1,0 +1,11 @@
+[theme]
+base="dark"
+
+[server]
+headless = true
+
+[client]
+toolbarMode = "minimal"
+
+[pages]
+order = ["SIGNUP.py", "LOGIN.py","pages/main.py"]
