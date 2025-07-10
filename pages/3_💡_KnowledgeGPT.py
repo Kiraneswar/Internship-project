@@ -20,7 +20,7 @@ def init_firebase():
 db = init_firebase()
 
 # ---------------- Configure Gemini ----------------
-genai.configure(api_key="AIzaSyAz4aEuk_1M3zbJZhZI-w8osfOWdIkzIB0")
+genai.configure(api_key="your gemini api key")
 
 @st.cache_resource
 def load_model():
