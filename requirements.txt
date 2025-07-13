@@ -1,5 +1,6 @@
 streamlit
 pyrebase4
+firebase-admin
 google-generativeai
 transformers
 torch
