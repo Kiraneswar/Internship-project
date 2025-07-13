@@ -4,23 +4,29 @@ import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
 from transformers import pipeline
-import firebase_admin
-from firebase_admin import credentials, firestore
 import datetime
 
 @st.cache_resource
 def init_firebase():
-    try:
-        cred = credentials.Certificate("firebase_config.json")
-        firebase_admin.initialize_app(cred)
-    except ValueError:
-        pass  # already initialized
+    import firebase_admin
+    from firebase_admin import credentials, firestore
+
+    # Check if Firebase app is already initialized
+    if not firebase_admin._apps:
+        try:
+            cred = credentials.Certificate("firebase_config.json")
+            firebase_admin.initialize_app(cred)
+        except Exception as e:
+            st.error(f"Firebase init failed: {e}")
+            return None  # Fail safely
+
     return firestore.client()
+
 
 db = init_firebase()
 
 # ---------------- Configure Gemini ----------------
-genai.configure(api_key="your gemini api key")
+genai.configure(api_key="AIzaSyAz4aEuk_1M3zbJZhZI-w8osfOWdIkzIB0")
 
 @st.cache_resource
 def load_model():
@@ -234,7 +240,7 @@ A: <Short, clear definition or answer>"""
     if st.session_state.flashcards:
         q, a = st.session_state.flashcards[st.session_state.flash_index]
         st.markdown(f"""
-        <div style="background-color:#f9f9f9;padding:20px;border-radius:15px;box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <div style="background-color:black;padding:20px;border-radius:15px;box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
             <h4 style="color:#2c3e50;">🃏 <b>Flashcard {st.session_state.flash_index + 1} of {len(st.session_state.flashcards)}</b></h4>
             <p><strong>Q:</strong> {q}</p>
             <p><strong>A:</strong> {a}</p>
