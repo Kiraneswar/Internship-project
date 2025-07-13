@@ -5,21 +5,21 @@ import base64
 from io import BytesIO
 from transformers import pipeline
 import datetime
+import json
+from firebase_admin import credentials, firestore, initialize_app
 
 @st.cache_resource
 def init_firebase():
     import firebase_admin
-    from firebase_admin import credentials, firestore
 
-    # Check if Firebase app is already initialized
+
     if not firebase_admin._apps:
-        try:
-            cred = credentials.Certificate("firebase_config.json")
-            firebase_admin.initialize_app(cred)
-        except Exception as e:
-            st.error(f"Firebase init failed: {e}")
-            return None  # Fail safely
-
+            try:
+                cred = credentials.Certificate(dict(st.secrets["firebase_admin"]))
+                firebase_admin.initialize_app(cred)
+            except Exception as e:
+                st.error(f"Firebase init failed: {e}")
+                return None
     return firestore.client()
 
 
