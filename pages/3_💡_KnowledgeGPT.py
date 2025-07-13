@@ -15,7 +15,7 @@ def init_firebase():
 
     if not firebase_admin._apps:
             try:
-                cred = credentials.Certificate(st.secrets["firebase_admin"])
+                cred = credentials.Certificate(dict(st.secrets["firebase_admin"]))
                 firebase_admin.initialize_app(cred)
             except Exception as e:
                 st.error(f"Firebase init failed: {e}")
