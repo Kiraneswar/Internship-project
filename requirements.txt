@@ -1,0 +1,6 @@
+streamlit
+pyrebase4
+google-generativeai
+transformers
+torch
+matplotlib
